@@ -1,24 +1,209 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>My Portfolio</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sri Laasya's portfolio: student, web developer in the making.">
+  <title>Laasya | Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Fredoka:wght@500;600&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #fdf8ef;        /* warm cream */
+      --card: #fffdf8;      /* soft paper white */
+      --text: #5b4a3f;      /* cozy cocoa brown */
+      --muted: #8a776a;
+      --accent: #6fb7e6;    /* sky blue */
+      --accent2: #a9d8f5;   /* pastel blue */
+      --border: #e3ecf3;
+      --warm: #ffe6c7;      /* peachy cream */
+      --glow: 111, 183, 230;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: 'Quicksand', Arial, sans-serif; font-weight: 500;
+      background: linear-gradient(180deg, #e6f4fd 0%, var(--bg) 380px); background-color: var(--bg);
+      color: var(--text); line-height: 1.75;
+    }
+    h1, h2, h3 { font-family: 'Fredoka', 'Quicksand', sans-serif; font-weight: 600; margin: 0; }
+    a { color: var(--accent); }
+    .wrap { max-width: 900px; margin: 0 auto; padding: 0 22px; }
+
+    /* Nav */
+    nav {
+      position: sticky; top: 0; z-index: 10; backdrop-filter: blur(10px);
+      background: rgba(255, 250, 240, .85);
+      border-bottom: 1px solid var(--border);
+    }
+    nav .wrap { display: flex; justify-content: space-between; align-items: center; padding-top: 14px; padding-bottom: 14px; }
+    .logo { font-family: 'Fredoka', sans-serif; font-size: 1.3rem; color: var(--accent); text-decoration: none; }
+    nav ul { display: flex; gap: 20px; list-style: none; margin: 0; padding: 0; }
+    nav ul a { text-decoration: none; color: var(--text); font-weight: 700; }
+    nav ul a:hover { color: var(--accent); }
+
+    /* Hero */
+    .hero { padding: 90px 0 70px; text-align: center; }
+    .avatar {
+      width: 120px; height: 120px; border-radius: 50%; margin: 0 auto 22px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: grid; place-items: center; font-family: 'Fredoka', sans-serif;
+      font-size: 3.4rem; color: #fff; box-shadow: 0 10px 30px rgba(var(--glow), .3);
+    }
+    .hero h1 { font-size: clamp(2rem, 6vw, 3.2rem); }
+    .hero h1 span {
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .hero p { max-width: 560px; margin: 16px auto 28px; color: var(--muted); font-size: 1.1rem; }
+    .btn {
+      display: inline-block; padding: 12px 28px; border-radius: 50px; font-weight: 700;
+      text-decoration: none; margin: 4px; transition: transform .2s, box-shadow .2s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn.primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; box-shadow: 0 6px 18px rgba(var(--glow), .3); }
+    .btn.ghost { border: 2px solid var(--accent); color: var(--accent); }
+
+    /* Sections */
+    section { padding: 60px 0; }
+    section h2 { font-size: 2rem; margin-bottom: 22px; }
+    section h2::after {
+      content: ""; display: block; width: 56px; height: 4px; border-radius: 4px; margin-top: 8px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    }
+    .skills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .skills span {
+      padding: 6px 16px; border-radius: 50px; background: var(--card);
+      border: 2px solid var(--border); font-weight: 700; font-size: .95rem;
+    }
+
+    /* Project cards */
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+    .card {
+      background: var(--card); border: 2px solid var(--border); border-radius: 22px;
+      padding: 24px; transition: transform .2s, box-shadow .2s;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(var(--glow), .18); }
+    .card h3 { font-size: 1.25rem; margin-bottom: 8px; }
+    .card p { margin: 0 0 14px; color: var(--muted); }
+    .tags { font-size: .85rem; color: var(--accent); font-weight: 700; margin-bottom: 14px; }
+    .card.soon { border-style: dashed; text-align: center; display: grid; place-items: center; color: var(--muted); }
+
+    /* Contact */
+    .contact { text-align: center; }
+    .contact h2::after { margin-left: auto; margin-right: auto; }
+    footer { text-align: center; padding: 30px 0 40px; color: var(--muted); font-size: .9rem; border-top: 1px solid var(--border); }
+
+    .hand { font-family: 'Caveat', cursive; font-size: 1.6rem; color: var(--accent); margin: 0 0 4px; }
+    .card { background: var(--card); border: 2px dashed #cfe3f1; box-shadow: 0 6px 16px rgba(120, 90, 60, .08); }
+    .card:nth-child(even) { background: #fff7ea; }
+    .skills span { background: var(--warm); border-color: #ffd9a8; color: #7a5a3a; }
+    .avatar { border: 6px solid #fff; box-shadow: 0 8px 22px rgba(120, 90, 60, .15); }
+    .btn.primary { color: #fff; text-shadow: 0 1px 2px rgba(40, 90, 130, .35); }
+    footer { background: var(--warm); border-top: none; color: #7a5a3a; }
+
+    /* Scroll fade-in */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s, transform .6s; }
+    .reveal.show { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
+    @media (max-width: 520px) { nav ul { gap: 12px; font-size: .9rem; } }
+  </style>
 </head>
+<body>
 
-<body style="font-family: Arial, sans-serif; text-align: center; padding: 60px;">
+  <nav>
+    <div class="wrap">
+      <a href="#top" class="logo">Laasya 🏡</a>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
 
-  <h1>Hello, I'm Laasya 👋</h1>
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="avatar" aria-hidden="true">L</div>
+      <p class="hand">welcome to my little corner of the internet 🏡</p>
+      <h1>Hi, I'm <span>Sri Laasya</span> 👋</h1>
+      <p>A student who loves technology and programming, building web projects and learning something new every day.</p>
+      <a class="btn primary" href="#projects">See my work</a>
+      <a class="btn ghost" href="#contact">Get in touch</a>
+    </div>
+  </header>
 
-  <p>I am a student interested in technology, programming, and learning new skills.</p>
+  <main>
+    <section id="about" class="reveal">
+      <div class="wrap">
+        <h2>About Me</h2>
+        <p>I enjoy building web pages, learning coding concepts, and sharpening my problem-solving skills. I like turning small ideas into things people can actually click on and use, from timers and quizzes to dashboards, a C++ Fitness Tracker.</p>
+        <div class="skills" aria-label="Skills">
+          <span>HTML</span><span>CSS</span><span>JavaScript</span><span>C++</span>
+          <span>Google Apps Script</span><span>Git &amp; GitHub</span>
+        </div>
+      </div>
+    </section>
 
-  <hr style="width: 50%;">
+    <section id="projects" class="reveal">
+      <div class="wrap">
+        <h2>Projects</h2>
+        <div class="grid">
+          <article class="card">
+            <h3>🐾 FocusPals Productivity Timer</h3>
+            <p>A cute Pomodoro timer with focus, snack and nap modes, XP levels, quests, trophies, rain sounds and an adventure log. Keyboard shortcuts included.</p>
+            <div class="tags">HTML · CSS · JavaScript</div>
+            <a class="btn primary" href="https://srilaasya487.github.io/PRODUCTIVITY_TIMER/" target="_blank" rel="noopener">Try it →</a>
+          </article>
+          <article class="card">
+            <h3>✨ Trivia Magic Quiz</h3>
+            <p>An interactive tech quiz, instant feedback and a live leaderboard saved to Google Sheets.</p>
+            <div class="tags">HTML · CSS · JavaScript · Apps Script</div>
+            <a class="btn primary" href="https://srilaasya487.github.io/INTERACTIVE-QUIZZ/" target="_blank" rel="noopener">Play it →</a>
+          </article>
+          <article class="card">
+            <h3>🏋️ Fitness Tracker System</h3>
+            <p>A menu-driven C++ app, workout logging and history, sorting by calories burned, weekly summaries, goals, a leaderboard and automatic BMI.</p>
+            <div class="tags">C++ · OOP · File handling</div>
+            <span class="tags">💻 Source on GitHub</span>
+          </article>
+          <article class="card">
+            <h3>📝 Registration Form Dashboard</h3>
+            <p>A registration form connected to a dashboard that displays the submitted details.</p>
+            <div class="tags">HTML · CSS · JavaScript</div>
+            <a class="btn primary" href="https://srilaasya487.github.io/Registration_form_dashboard/" target="_blank" rel="noopener">View it →</a>
+          </article>
+          <article class="card">
+            <h3>🎂 Happy Birthday Bestie</h3>
+            <p>A personal birthday web page made as a surprise for a friend.</p>
+            <div class="tags">HTML · CSS · JavaScript</div>
+            <a class="btn primary" href="https://srilaasya487.github.io/happy-birthday-bestie/" target="_blank" rel="noopener">See it →</a>
+          </article>
+        </div>
+      </div>
+    </section>
 
-  <h2>About Me</h2>
-  <p>I enjoy building simple web pages, learning coding concepts, and improving my problem-solving skills.</p>
+    <section id="contact" class="contact reveal">
+      <div class="wrap">
+        <h2>Contact</h2>
+        <p>Want to chat, collaborate, or just say hi?</p>
+        <a class="btn primary" href="mailto:maddurisrilaasya@gmail.com">✉️ maddurisrilaasya@gmail.com</a>
+        <a class="btn ghost" href="https://github.com/srilaasya487" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </section>
+  </main>
 
-  <hr style="width: 50%;">
-
-  <h2>Contact</h2>
-  <p>Email: maddurisrilaasya@gmail.com</p>
-
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("show"); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+  </script>
 </body>
 </html>
