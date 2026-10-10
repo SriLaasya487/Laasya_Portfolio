@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>document.documentElement.classList.add('js');</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Sri Laasya's portfolio: student, web developer in the making.">
@@ -96,6 +97,8 @@
     .contact h2::after { margin-left: auto; margin-right: auto; }
     footer { text-align: center; padding: 30px 0 40px; color: var(--muted); font-size: .9rem; border-top: 1px solid var(--border); }
 
+
+    /* Homey touches */
     .hand { font-family: 'Caveat', cursive; font-size: 1.6rem; color: var(--accent); margin: 0 0 4px; }
     .card { background: var(--card); border: 2px dashed #cfe3f1; box-shadow: 0 6px 16px rgba(120, 90, 60, .08); }
     .card:nth-child(even) { background: #fff7ea; }
@@ -105,11 +108,11 @@
     footer { background: var(--warm); border-top: none; color: #7a5a3a; }
 
     /* Scroll fade-in */
-    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s, transform .6s; }
-    .reveal.show { opacity: 1; transform: none; }
+    .js .reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s, transform .6s; }
+    .js .reveal.show { opacity: 1; transform: none; }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
-      .reveal { opacity: 1; transform: none; transition: none; }
+      .js .reveal { opacity: 1; transform: none; transition: none; }
     }
     @media (max-width: 520px) { nav ul { gap: 12px; font-size: .9rem; } }
   </style>
@@ -142,7 +145,7 @@
     <section id="about" class="reveal">
       <div class="wrap">
         <h2>About Me</h2>
-        <p>I enjoy building web pages, learning coding concepts, and sharpening my problem-solving skills. I like turning small ideas into things people can actually click on and use, from timers and quizzes to dashboards, a C++ Fitness Tracker.</p>
+        <p>I enjoy building web pages, learning coding concepts, and sharpening my problem-solving skills. I like turning small ideas into things people can actually click on and use, from timers and quizzes to dashboards and a C++ Fitness Tracker.</p>
         <div class="skills" aria-label="Skills">
           <span>HTML</span><span>CSS</span><span>JavaScript</span><span>C++</span>
           <span>Google Apps Script</span><span>Git &amp; GitHub</span>
@@ -162,13 +165,13 @@
           </article>
           <article class="card">
             <h3>✨ Trivia Magic Quiz</h3>
-            <p>An interactive tech quiz, instant feedback and a live leaderboard saved to Google Sheets.</p>
+            <p>An interactive tech quiz with instant feedback and a live leaderboard saved to Google Sheets.</p>
             <div class="tags">HTML · CSS · JavaScript · Apps Script</div>
             <a class="btn primary" href="https://srilaasya487.github.io/INTERACTIVE-QUIZZ/" target="_blank" rel="noopener">Play it →</a>
           </article>
           <article class="card">
             <h3>🏋️ Fitness Tracker System</h3>
-            <p>A menu-driven C++ app, workout logging and history, sorting by calories burned, weekly summaries, goals, a leaderboard and automatic BMI.</p>
+            <p>A menu-driven C++ app with workout logging and history, sorting by calories burned, weekly summaries, goals, a leaderboard and automatic BMI.</p>
             <div class="tags">C++ · OOP · File handling</div>
             <span class="tags">💻 Source on GitHub</span>
           </article>
@@ -192,18 +195,29 @@
       <div class="wrap">
         <h2>Contact</h2>
         <p>Want to chat, collaborate, or just say hi?</p>
+        <!-- TODO: replace with your real email -->
         <a class="btn primary" href="mailto:maddurisrilaasya@gmail.com">✉️ maddurisrilaasya@gmail.com</a>
         <a class="btn ghost" href="https://github.com/srilaasya487" target="_blank" rel="noopener">GitHub</a>
       </div>
     </section>
   </main>
 
+  <footer>© <span id="year"></span> Sri Laasya · Built with HTML, CSS &amp; a lot of cozy vibes ☁️🏡</footer>
+
   <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("show"); io.unobserve(e.target); } });
-    }, { threshold: 0.12 });
-    document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+    // Each step is guarded so one missing element can never break the rest.
+    const yearEl = document.getElementById("year");
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+    const items = document.querySelectorAll(".reveal");
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("show"); io.unobserve(e.target); } });
+      }, { threshold: 0.05 });
+      items.forEach(el => io.observe(el));
+    } else {
+      items.forEach(el => el.classList.add("show"));
+    }
   </script>
 </body>
 </html>
